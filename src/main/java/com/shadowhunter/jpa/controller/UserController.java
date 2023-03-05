@@ -22,8 +22,9 @@ public class UserController {
 
 
     @PostMapping("/saveUser")
-    public User saveUser(@RequestBody UserRequest user){
-        return userRepository.save(user.getUser());
+    public ResponseEntity<String> saveUser(@RequestBody List<User> users){
+        userRepository.saveAll(users);
+        return ResponseEntity.ok("data saved");
     }
 
     @GetMapping("/findAllUsers")
@@ -57,7 +58,7 @@ public class UserController {
         User updateUser = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found Tutorial with id = " + id));
 
         updateUser.setName(user.getName());
-        updateUser.setTechnology(user.getTechnology());
+        updateUser.setTechnologyName(user.getTechnologyName());
         updateUser.setTechnologyinfo(user.getTechnologyinfo());
         updateUser.setTechnologylevel(user.getTechnologylevel());
 

@@ -1,17 +1,23 @@
 package com.shadowhunter.jpa.entity;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.shadowhunter.jpa.entity.User;
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Transactional
 @ToString
 @Entity
 @Table(name = "Technology")
@@ -25,5 +31,8 @@ public class Technology {
 
     private int technologyLevel;
     private String technologyInfo;
+    @ManyToMany(mappedBy = "technologies", fetch = FetchType.LAZY)
+    @JsonProperty
+    private Set<User> users;
 
 }
